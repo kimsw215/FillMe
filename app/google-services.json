@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "763424659167",
+    "project_id": "fillme-f21e6",
+    "storage_bucket": "fillme-f21e6.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:763424659167:android:03f2048798af10c3267b6a",
+        "android_client_info": {
+          "package_name": "kr.ac.kpu.ce2019152012.fillme"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "763424659167-8vbmgds46j4eb32iaiacrosg6r5drs4m.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "kr.ac.kpu.ce2019152012.fillme",
+            "certificate_hash": "60c1eb23f0df7976a28c84f241cfcbefb3f50096"
+          }
+        },
+        {
+          "client_id": "763424659167-k6rd39rjfnptb3778rpq4vivdotnhgn3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBdA8YW8jwYvFygZJ_eUnxmvIy2zBn_qyc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "763424659167-k6rd39rjfnptb3778rpq4vivdotnhgn3.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
