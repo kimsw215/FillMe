@@ -9,4 +9,10 @@
     <color name="white">#FFFFFFFF</color>
     <color name="joincolor">#8F9090</color>
     <color name="basiccolor">#A5C2F8</color>
+    <color name="selectcolor">#507AB3</color>
+    <color name="noselectecolor">#AEAEAE</color>
+    <color name="batteryone">#E29254</color>
+    <color name="batterytwo">#8EC8B7</color>
+    <color name="batterythree">#507AB3</color>
+    <color name="batteryfour">#8EC8B7</color>
 </resources>
