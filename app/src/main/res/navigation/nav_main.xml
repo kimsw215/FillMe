@@ -1,6 +1,70 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/nav_main">
+    android:id="@+id/nav_main"
+    app:startDestination="@id/homeFragment">
 
+    <fragment
+        android:id="@+id/mainFragment"
+        android:name="kr.ac.kpu.ce2019152012.fillme.Fragments.MainFragment"
+        android:label="MainFragment" >
+        <action
+            android:id="@+id/action_mainFragment_to_monthTabViewpager"
+            app:destination="@id/monthTabViewpager" />
+        <action
+            android:id="@+id/action_mainFragment_to_weekTabViewpager"
+            app:destination="@id/weekTabViewpager" />
+        <action
+            android:id="@+id/action_mainFragment_to_dayTabViewpager"
+            app:destination="@id/dayTabViewpager" />
+    </fragment>
+    <fragment
+        android:id="@+id/myFragment"
+        android:name="kr.ac.kpu.ce2019152012.fillme.Fragments.MyFragment"
+        android:label="MyFragment" />
+    <fragment
+        android:id="@+id/homeFragment"
+        android:name="kr.ac.kpu.ce2019152012.fillme.Fragments.HomeFragment"
+        android:label="HomeFragment" />
+
+    <navigation android:id="@+id/navigation"
+        app:startDestination="@id/userMainAcivity">
+        <activity
+            android:id="@+id/userMainAcivity"
+            android:name="kr.ac.kpu.ce2019152012.fillme.user.UserMainAcivity"
+            android:label="UserMainAcivity" />
+        <action
+            android:id="@+id/action_global_mainFragment"
+            app:destination="@id/mainFragment" />
+        <action
+            android:id="@+id/action_global_homeFragment"
+            app:destination="@id/homeFragment" />
+        <action
+            android:id="@+id/action_global_myFragment"
+            app:destination="@id/myFragment" />
+    </navigation>
+    <fragment
+        android:id="@+id/dayTabViewpager"
+        android:name="kr.ac.kpu.ce2019152012.fillme.FragmentsOfMain.DayTabViewpager"
+        android:label="DayTabViewpager" >
+        <action
+            android:id="@+id/action_dayTabViewpager_to_monthTabViewpager"
+            app:destination="@id/monthTabViewpager" />
+    </fragment>
+    <fragment
+        android:id="@+id/weekTabViewpager"
+        android:name="kr.ac.kpu.ce2019152012.fillme.FragmentsOfMain.WeekTabViewpager"
+        android:label="WeekTabViewpager" >
+        <action
+            android:id="@+id/action_weekTabViewpager_to_dayTabViewpager"
+            app:destination="@id/dayTabViewpager" />
+    </fragment>
+    <fragment
+        android:id="@+id/monthTabViewpager"
+        android:name="kr.ac.kpu.ce2019152012.fillme.FragmentsOfMain.MonthTabViewpager"
+        android:label="MonthTabViewpager" >
+        <action
+            android:id="@+id/action_monthTabViewpager_to_weekTabViewpager"
+            app:destination="@id/weekTabViewpager" />
+    </fragment>
 </navigation>

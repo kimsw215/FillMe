@@ -38,6 +38,7 @@ class JoinActivity : AppCompatActivity() {
             "passwd" to binding.joinPwEdit.text.toString().trim(),
             "nickname" to binding.joinNameEdit.text.toString().trim(),
         )
+
         db.collection("User").document(binding.joinIdEdit.text.toString().trim())
             .set(userInformation, SetOptions.merge())
             .addOnSuccessListener { Log.d(TAG, "DocumentSnapshot successfully written!") }

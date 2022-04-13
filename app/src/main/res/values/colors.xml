@@ -15,4 +15,5 @@
     <color name="batterytwo">#8EC8B7</color>
     <color name="batterythree">#507AB3</color>
     <color name="batteryfour">#8EC8B7</color>
+    <color name="noborderwhite">#00ff0000</color>
 </resources>

@@ -93,6 +93,6 @@ class LoginActivity : AppCompatActivity() {
         db.firestoreSettings = settings
     }
     companion object {
-        private const val TAG = "EmailPassword"
+        private const val TAG = "error"
     }
 }
