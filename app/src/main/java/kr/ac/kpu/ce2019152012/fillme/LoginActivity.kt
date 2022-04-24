@@ -20,6 +20,11 @@ class LoginActivity : AppCompatActivity() {
     private lateinit var auth: FirebaseAuth
     private lateinit var db: FirebaseFirestore
 
+    private var user = Firebase.auth.currentUser
+    private var uid = user?.uid.toString()
+
+    private val itemsCollectionRef = db.collection("User")
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityLoginBinding.inflate(layoutInflater)
@@ -32,11 +37,9 @@ class LoginActivity : AppCompatActivity() {
 
         var UserList = arrayListOf<String>()
 
-        db.collection("User")
-            .get()
-            .addOnSuccessListener { result ->
+        itemsCollectionRef.get().addOnSuccessListener { result ->
                 for(document in result) {
-                    UserList.add(document.id.trim())
+                    UserList.add(document.toString())
                     Log.d("list",UserList.toString())
                 }
             }.addOnFailureListener { exception ->
@@ -65,6 +68,11 @@ class LoginActivity : AppCompatActivity() {
                         updateUI(null)
                     }
                 }
+        }
+
+        binding.joinText.setOnClickListener {
+            val intent = Intent(this,JoinActivity::class.java)
+            startActivity(intent)
         }
     }
 

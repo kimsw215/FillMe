@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/nav_main"
+    app:startDestination="@id/homeFragment">
+
+    <fragment
+        android:id="@+id/viewPagerFragment"
+        android:name="kr.ac.kpu.ce2019152012.fillme.Fragments.ViewPagerFragment"
+        android:label="ViewPagerFragment" />
+    <fragment
+        android:id="@+id/homeFragment"
+        android:name="kr.ac.kpu.ce2019152012.fillme.Fragments.HomeFragment"
+        android:label="HomeFragment" />
+    <fragment
+        android:id="@+id/myFragment"
+        android:name="kr.ac.kpu.ce2019152012.fillme.Fragments.MyFragment"
+        android:label="MyFragment" />
+
+
+</navigation>

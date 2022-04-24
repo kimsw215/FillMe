@@ -2,16 +2,16 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/menu_main"
+        android:id="@+id/mainFragment"
         android:icon="@drawable/main"
         android:title="메인"/>
 
     <item
-        android:id="@+id/menu_home"
+        android:id="@+id/homeFragment"
         android:icon="@drawable/home"
         android:title="홈" />
     <item
-        android:id="@+id/menu_mypage"
+        android:id="@+id/myFragment"
         android:icon="@drawable/mypage"
         android:title="마이페이지" />
 </menu>
