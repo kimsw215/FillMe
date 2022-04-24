@@ -6,6 +6,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.ktx.firestoreSettings
 import com.prolificinteractive.materialcalendarview.CalendarDay
 import com.prolificinteractive.materialcalendarview.MaterialCalendarView
 import com.prolificinteractive.materialcalendarview.OnDateSelectedListener
@@ -19,6 +22,9 @@ class MonthTabViewpager : Fragment() {
 
     private lateinit var binding: TabViewpagerMonthBinding
 
+    private lateinit var auth: FirebaseAuth
+    private lateinit var db: FirebaseFirestore
+
     lateinit var calendar : MaterialCalendarView
 
     override fun onAttach(context: Context) {
@@ -27,6 +33,8 @@ class MonthTabViewpager : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        auth = FirebaseAuth.getInstance()
+        setup2()
     }
 
 // 화면
@@ -47,6 +55,8 @@ class MonthTabViewpager : Fragment() {
     // 기능
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+
         binding.calendar.setOnDateChangedListener(object: OnDateSelectedListener{
             override fun onDateSelected(
                 widget: MaterialCalendarView,
@@ -57,5 +67,13 @@ class MonthTabViewpager : Fragment() {
             }
         })
 
+    }
+
+    fun setup2() {
+        db = FirebaseFirestore.getInstance()
+        val settings = firestoreSettings {
+            isPersistenceEnabled = true
+        }
+        db.firestoreSettings = settings
     }
 }

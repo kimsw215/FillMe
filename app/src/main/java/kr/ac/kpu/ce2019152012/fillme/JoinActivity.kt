@@ -24,11 +24,6 @@ class JoinActivity : AppCompatActivity() {
     private lateinit var auth: FirebaseAuth
     private lateinit var db : FirebaseFirestore
 
-    private var user = Firebase.auth.currentUser
-    private var uid = user?.uid.toString()
-
-    private val itemsCollectionRef = db.collection("User")
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -48,17 +43,6 @@ class JoinActivity : AppCompatActivity() {
         binding.joinInBtn.setOnClickListener {
             val email = binding.joinIdEdit.text.toString().trim()
             val password = binding.joinPwEdit.text.toString().trim()
-
-            val userInformation = hashMapOf(
-                "email" to binding.joinIdEdit.text.toString().trim(),
-                "passwd" to binding.joinPwEdit.text.toString().trim(),
-                "nickname" to binding.joinNameEdit.text.toString().trim(),
-            )
-            itemsCollectionRef.document(uid)
-                .set(userInformation, SetOptions.merge())
-                .addOnSuccessListener { Log.d(TAG, "DocumentSnapshot successfully written!") }
-                .addOnFailureListener { e -> Log.w(TAG, "Error writing document", e) }
-
             createUser(email, password)
             // 회원가입 완료 후 로그인창으로 이동
             val intent = Intent(this, LoginActivity::class.java)
@@ -71,6 +55,16 @@ class JoinActivity : AppCompatActivity() {
             // 이메일 형식 체크
             if (android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
                 if (task.isSuccessful) {
+                    val userInformation = hashMapOf(
+                        "email" to binding.joinIdEdit.text.toString().trim(),
+                        "passwd" to binding.joinPwEdit.text.toString().trim(),
+                        "nickname" to binding.joinNameEdit.text.toString().trim(),
+                    )
+                    db.collection(binding.joinIdEdit.toString().trim()).document("information")
+                        .set(userInformation, SetOptions.merge())
+                        .addOnSuccessListener { Log.d(TAG, "DocumentSnapshot successfully written!") }
+                        .addOnFailureListener { e -> Log.w(TAG, "Error writing document", e) }
+
                     Toast.makeText(this, "회원가입 성공", Toast.LENGTH_SHORT).show()
                     val user = auth.currentUser
                     updateUI(user)

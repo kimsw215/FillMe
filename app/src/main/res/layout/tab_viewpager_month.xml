@@ -40,6 +40,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.725"
+        xmlns:tools="http://schemas.android.com/tools"
         app:mcv_selectionColor="@color/selector_btm_nav"
         app:mcv_showOtherDates="all"/>
 

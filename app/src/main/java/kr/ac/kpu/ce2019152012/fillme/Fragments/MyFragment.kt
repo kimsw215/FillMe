@@ -12,7 +12,6 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestoreSettings
 import com.google.firebase.ktx.Firebase
-import kr.ac.kpu.ce2019152012.fillme.databinding.FragmentMainBinding
 import kr.ac.kpu.ce2019152012.fillme.databinding.FragmentMyBinding
 
 class MyFragment : Fragment() {
@@ -21,11 +20,6 @@ class MyFragment : Fragment() {
 
     private lateinit var auth: FirebaseAuth
     private lateinit var db: FirebaseFirestore
-
-    private var user = Firebase.auth.currentUser
-    private var uid = user?.uid.toString()
-
-    private val itemsCollectionRef = db.collection("User")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,6 +39,7 @@ class MyFragment : Fragment() {
             }.addOnFailureListener { exception ->
                 Log.d("Cloud", UserIdList.toString(), exception)
             }*/
+
     }
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -55,7 +50,7 @@ class MyFragment : Fragment() {
         val view = binding.root
 
         // 프로필 이름 설정
-        itemsCollectionRef.document(uid).get()
+        db.collection(auth.currentUser?.email.toString()).document("information").get()
             .addOnSuccessListener {
                 binding.nickname.setText(it["nickname"].toString() + " 님")
             }.addOnFailureListener { }
@@ -75,21 +70,6 @@ class MyFragment : Fragment() {
         binding.logoutBtn.setOnClickListener {
             Firebase.auth.signOut()
         }
-    }
-
-    // Cloud Firestore - 데이터 읽기 -> Document의 필드 읽기
-/*    private fun queryItem(itemID: String){
-        itemsCollectionRef.document(itemID).get()
-            .addOnSuccessListener{
-                binding.nickname.setText(it["nickname"].toString() + " 님")
-            }.addOnFailureListener{
-            }
-    }*/
-
-    private fun updateUI(user: FirebaseUser?) {
-    }
-
-    private fun reload() {
     }
 
     fun setup2() {
