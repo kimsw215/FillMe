@@ -5,6 +5,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.google.firebase.auth.FirebaseAuth
@@ -19,7 +21,7 @@ import java.util.*
 import java.util.logging.Logger.global
 
 class HomeFragment: Fragment() {
-    private var _binding:FragmentHomeBinding? = null
+    private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
 
     private lateinit var auth: FirebaseAuth
@@ -32,9 +34,14 @@ class HomeFragment: Fragment() {
     var btnCheck4 = false
 
     val calendar = Calendar.getInstance()
+
     val year = calendar.get(Calendar.YEAR).toString()
-    val month = calendar.get((Calendar.MONTH) + 1).toString()
-    val day = calendar.get(Calendar.DATE)
+    // 이번 달
+    val _month = calendar.get((Calendar.MONTH))
+    val month = (_month).toString()
+    // 오늘 날짜
+    val _day = calendar.get(Calendar.DATE) // 오늘 날짜
+    val day = (_day+1).toString()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -50,14 +57,13 @@ class HomeFragment: Fragment() {
         savedInstanceState: Bundle?
 
     ): View? {
-        _binding = FragmentHomeBinding.inflate(inflater,container,false)
+        _binding = FragmentHomeBinding.inflate(inflater, container, false)
         val view = binding.root
 
         binding.battery1.setBackgroundColor(resources.getColor(R.color.noborderwhite))
         binding.battery2.setBackgroundColor(resources.getColor(R.color.noborderwhite))
         binding.battery3.setBackgroundColor(resources.getColor(R.color.noborderwhite))
         binding.battery4.setBackgroundColor(resources.getColor(R.color.noborderwhite))
-
         return view
     }
 
@@ -86,6 +92,7 @@ class HomeFragment: Fragment() {
             binding.battery2.setBackgroundColor(resources.getColor(R.color.batterytwo))
             binding.battery3.setBackgroundColor(resources.getColor(R.color.noborderwhite))
             binding.battery4.setBackgroundColor(resources.getColor(R.color.noborderwhite))
+
             binding.gaugeNumber.setText("50")
         }
         binding.battery3.setOnClickListener {
@@ -112,25 +119,27 @@ class HomeFragment: Fragment() {
         }
 
         binding.fillBtn.setOnClickListener {
-        /* bool 값 체크에 따라서 db.collection - document(22.04) <- 연도.월  -  field(오늘의 요일)에 넣고
+            /* bool 값 체크에 따라서 db.collection - document(22.04) <- 연도.월  -  field(오늘의 요일)에 넣고
            set으로 다시 갱신*/
-            if(btnCheck1){
+            if (btnCheck1) {
                 db.collection(auth.currentUser?.email.toString())
                     .document("${year}.${month}")
-                    .update(day.toString(),25)
-            } else if(btnCheck2){
+                    .update(day, 25)
+            } else if (btnCheck2) {
                 db.collection(auth.currentUser?.email.toString())
                     .document("${year}.${month}")
-                    .update(day.toString(),50)
-            } else if(btnCheck3){
+                    .update(day, 50)
+            } else if (btnCheck3) {
                 db.collection(auth.currentUser?.email.toString())
                     .document("${year}.${month}")
-                    .update(day.toString(),75)
-            } else if(btnCheck4){
+                    .update(day, 75)
+            } else if (btnCheck4) {
                 db.collection(auth.currentUser?.email.toString())
                     .document("${year}.${month}")
-                    .update(day.toString(),100)
+                    .update(day,100)
+
             }
+            Toast.makeText(activity?.applicationContext,"오늘의 감정을 충전했어요",Toast.LENGTH_SHORT).show()
         }
 
     }

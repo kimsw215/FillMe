@@ -25,21 +25,6 @@ class MyFragment : Fragment() {
         super.onCreate(savedInstanceState)
         auth = FirebaseAuth.getInstance()
         setup2()
-
-/*
-        // User 아이디 받아오는건데 auth.currentUser 로 받아올 수 있으면 버림
-        var UserIdList = arrayListOf<String>()
-        db.collection("User")
-            .get()
-            .addOnSuccessListener { result ->
-                for (document in result) {
-                    UserIdList.add(document.id.trim())
-                    Log.d("list", UserIdList.toString())
-                }
-            }.addOnFailureListener { exception ->
-                Log.d("Cloud", UserIdList.toString(), exception)
-            }*/
-
     }
     override fun onCreateView(
         inflater: LayoutInflater,
