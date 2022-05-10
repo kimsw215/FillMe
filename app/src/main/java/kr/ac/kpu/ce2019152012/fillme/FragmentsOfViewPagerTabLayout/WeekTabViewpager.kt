@@ -13,6 +13,7 @@ import androidx.fragment.app.Fragment
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestoreSettings
+import kr.ac.kpu.ce2019152012.fillme.R
 import kr.ac.kpu.ce2019152012.fillme.databinding.TabViewpagerWeekBinding
 import java.lang.Exception
 import java.util.*
@@ -22,6 +23,8 @@ class WeekTabViewpager : Fragment() {
 
     private lateinit var auth: FirebaseAuth
     private lateinit var db: FirebaseFirestore
+
+    private var itemRef = db.collection(auth.currentUser?.email.toString().trim())
 
     val calendar = Calendar.getInstance()
 
@@ -112,19 +115,96 @@ class WeekTabViewpager : Fragment() {
         // 날짜로 document 받아서 퍼센트 게이지 표시
 
         // 날짜에 데이터가 없으면 0 표기 있으면 값 표기
-        /*db.collection(auth.currentUser?.email.toString()).document("${year}.${month}")
+        db.collection(auth.currentUser?.email.toString().trim()).document("${year}.${month}")
             .get().addOnSuccessListener {
+                val weekSumGauge = hashMapOf<String,Int>(
+                    sunday to 0,
+                    satday to 0,
+                    friday to 0,
+                    thuday to 0,
+                    wedday to 0,
+                    tueday to 0,
+                    monday to 0,
+                )
                 //일요일 게이지
-                if (it["${day}"].toString() == null)
-                //binding.gaugeNumber1.setText()
+                if (it[sunday]?.toString() == null){ WeekGaugeCheck(sunday)
+                } else{ // 이번주 일요일 field에 value 값이 있다면
+                    WeekGaugeText(sunday)
+                    weekSumGauge.replace(sunday,it[sunday].toString().toInt())
+                }
+                //토요일 게이지
+                if (it[satday]?.toString() == null){ WeekGaugeCheck(satday)
+                } else{ // 이번주 일요일 field에 value 값이 있다면
+                    WeekGaugeText(satday)
+                    weekSumGauge.replace(satday,it[satday].toString().toInt())}
+                //금요일 게이지
+                if (it[friday]?.toString() == null){ WeekGaugeCheck(friday)
+                } else{ // 이번주 일요일 field에 value 값이 있다면
+                    WeekGaugeText(friday)
+                    weekSumGauge.replace(friday,it[friday].toString().toInt())}
+                //목요일 게이지
+                if (it[thuday]?.toString() == null){ WeekGaugeCheck(thuday)
+                } else{ // 이번주 일요일 field에 value 값이 있다면
+                    WeekGaugeText(thuday)
+                    weekSumGauge.replace(thuday,it[thuday].toString().toInt())}
+                //수요일 게이지
+                if (it[wedday]?.toString() == null){ WeekGaugeCheck(wedday)
+                } else{ // 이번주 일요일 field에 value 값이 있다면
+                    WeekGaugeText(wedday)
+                    weekSumGauge.replace(wedday,it[wedday].toString().toInt())}
+                //화요일 게이지
+                if (it[tueday]?.toString() == null){ WeekGaugeCheck(tueday)
+                } else{ // 이번주 일요일 field에 value 값이 있다면
+                    WeekGaugeText(tueday)
+                    weekSumGauge.replace(tueday,it[tueday].toString().toInt())}
+                //월요일 게이지
+                if (it[monday]?.toString() == null){ WeekGaugeCheck(monday)
+                } else{ // 이번주 일요일 field에 value 값이 있다면
+                    WeekGaugeText(monday)
+                    weekSumGauge.replace(monday,it[monday].toString().toInt())}
+
+                // 평균 데이터
+                // when 으로 범위 나눠서 반올림해서 하는 식으로
+                var sum :Double = 0.0
+                for ((key,value) in weekSumGauge) {
+                    sum += value
+                }
+                var res = sum/7
+                when(sum){
+                    in 0.0..25.0 ->
+                    {
+                        binding.battery1.setBackgroundColor(resources.getColor(R.color.batteryone))
+                        binding.battery2.setBackgroundColor(resources.getColor(R.color.noborderwhite))
+                        binding.battery3.setBackgroundColor(resources.getColor(R.color.noborderwhite))
+                        binding.battery4.setBackgroundColor(resources.getColor(R.color.noborderwhite))
+                    }
+                    in 26.0..50.0 ->
+                    {
+                        binding.battery1.setBackgroundColor(resources.getColor(R.color.batterytwo))
+                        binding.battery2.setBackgroundColor(resources.getColor(R.color.batterytwo))
+                        binding.battery3.setBackgroundColor(resources.getColor(R.color.noborderwhite))
+                        binding.battery4.setBackgroundColor(resources.getColor(R.color.noborderwhite))
+                    }
+                    in 51.0..75.0 ->
+                    {
+                        binding.battery1.setBackgroundColor(resources.getColor(R.color.batterythree))
+                        binding.battery2.setBackgroundColor(resources.getColor(R.color.batterythree))
+                        binding.battery3.setBackgroundColor(resources.getColor(R.color.batterythree))
+                        binding.battery4.setBackgroundColor(resources.getColor(R.color.noborderwhite))
+                    }
+                    else ->
+                    {
+                        binding.battery1.setBackgroundColor(resources.getColor(R.color.batteryfour))
+                        binding.battery2.setBackgroundColor(resources.getColor(R.color.batteryfour))
+                        binding.battery3.setBackgroundColor(resources.getColor(R.color.batteryfour))
+                        binding.battery4.setBackgroundColor(resources.getColor(R.color.batteryfour))
+                    }
+                }
+
+
             }.addOnFailureListener {
-
-            }*/
-
-
-        // 평균 데이터
-        // when 으로 범위 나눠서 반올림해서 하는 식으로
-
+                Log.d("WeekGauge","Error")
+            }
         return view
     }
 
@@ -145,6 +225,18 @@ class WeekTabViewpager : Fragment() {
         val dayFormat = SimpleDateFormat("dd", Locale.getDefault())
         val day = dayFormat.format(date)
         return day
+    }
+
+    fun WeekGaugeCheck(day : String){
+            db.collection(auth.currentUser?.email.toString())
+                .document("${year}.${month}")
+                .update(day, 0)
+    }
+    fun WeekGaugeText(day: String){
+        itemRef.document("${year}.${month}")
+            .get().addOnSuccessListener {
+                binding.gaugeNumber1.text = it[day]?.toString()!!.trim()
+            }
     }
 
 }

@@ -5,6 +5,8 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
+import com.firebase.ui.auth.FirebaseAuthUIActivityResultContract
+import com.firebase.ui.auth.data.model.FirebaseAuthUIAuthenticationResult
 import com.google.firebase.FirebaseApp
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
@@ -23,6 +25,15 @@ class JoinActivity : AppCompatActivity() {
     //nullable한 FirebaseAuth 객체 선언
     private lateinit var auth: FirebaseAuth
     private lateinit var db : FirebaseFirestore
+
+
+    // Start auth_fui_create_launcher
+/*    private val signInLauncher = registerForActivityResult(
+        FirebaseAuthUIActivityResultContract()
+    ) {
+        res ->
+        this.onSignInResult(res)
+    }*/
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -47,6 +58,7 @@ class JoinActivity : AppCompatActivity() {
             // 회원가입 완료 후 로그인창으로 이동
             val intent = Intent(this, LoginActivity::class.java)
             startActivity(intent)
+            finish()
         }
     }
 
@@ -78,6 +90,18 @@ class JoinActivity : AppCompatActivity() {
             }
         }
     }
+
+/*    private fun onSignInResult(result: FirebaseAuthUIAuthenticationResult){
+        val response = result.idpResponse
+        if(result.resultCode == RESULT_OK){
+            // Successfully signed in
+            val user = FirebaseAuth.getInstance().currentUser
+        } else{
+            // Sign in failed. If response is null the uer cancled the
+            // sign-in flow using the back button. Otherwise check
+            // response.getError().getErrorCode() and handle the error
+        }
+    }*/
 
     private fun updateUI(user: FirebaseUser?) {
 

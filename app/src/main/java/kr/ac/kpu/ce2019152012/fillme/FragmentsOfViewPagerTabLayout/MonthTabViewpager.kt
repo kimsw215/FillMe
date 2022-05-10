@@ -25,7 +25,22 @@ class MonthTabViewpager : Fragment() {
     private lateinit var auth: FirebaseAuth
     private lateinit var db: FirebaseFirestore
 
+    // 커스텀 캘랜더
     lateinit var calendar : MaterialCalendarView
+
+    // 달력 날짜 받기
+    val Ccalendar = Calendar.getInstance()
+
+    val year = Ccalendar.get(Calendar.YEAR).toString()
+
+    // 이번 달
+    val _month = Ccalendar.get((Calendar.MONTH))
+    val month = (_month).toString()
+
+    // 오늘 날짜
+    val _day = Ccalendar.get(Calendar.DATE) // 오늘 날짜
+    val day = (_day + 1).toString()
+
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
